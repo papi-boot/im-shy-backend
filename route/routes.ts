@@ -1,6 +1,7 @@
 import { RegisterController } from "../controller/register/register.controller";
 import { LoginController } from "../controller/login/login.controller";
 import { CookieController } from "../controller/cookie/cookie.controller";
+import { AuthenticateController } from "../controller/authenticate/authenticate.controller";
 import express from "express";
 import passport from "passport";
 new LoginController().loginPassportConfig(passport);
@@ -9,9 +10,14 @@ export class Routes {
   private registerController: RegisterController = new RegisterController();
   private loginController: LoginController = new LoginController();
   private cookieController: CookieController = new CookieController();
+  private authenticateController: AuthenticateController = new AuthenticateController();
   // @TODO: ALL HTTP GET ROUTE
   public GET_REQUEST(): any {
     this.routes.get("/check-cookie", this.cookieController.checkCookie);
+    this.routes.get(
+      this.authenticateController.AUTH_ROUTE,
+      this.authenticateController.checkAuthenticated
+    );
     return this.routes;
   }
 
