@@ -2,7 +2,7 @@
   "name": "imshy-backend",
   "version": "1.0.0",
   "description": "im shy backend service",
-  "main": "main.js",
+  "main": "dist/main.js",
   "scripts": {
     "start": "node dist/main.js",
     "build": "tsc",

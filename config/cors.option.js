@@ -1,6 +1,6 @@
 export const corsOptions = {
   credentials: true,
-  origin: process.env.NODE_ENV === "production" ? "https://www.creative-cookie.studio" : "http://localhost:3000",
+  origin: process.env.NODE_ENV === "production" ? "https://www.creative-cookie.studio" : "http://localhost:2209",
   allowedHeaders: [
     "Access-Control-Allow-Credentials",
     "Access-Control-Allow-Headers",

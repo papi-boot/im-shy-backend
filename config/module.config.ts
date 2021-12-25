@@ -2,7 +2,7 @@ import { UserModel } from "../model/user";
 declare module "express-session" {
   interface SessionData {
     user?: UserModel;
-    passport?: object;
+    passport: { user: string };
   }
 }
 declare global {
