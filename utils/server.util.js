@@ -54,7 +54,6 @@ export class ServerUtil {
   httpServer = createServer(this.app);
   io = new Server(this.httpServer, { cors: corsOptions });
   SECRET_KEY = process.env.SECRET_KEY;
-  sl = new SocketListener();
   socketController = new SocketConctroller();
 
   startServerMiddleWare() {
