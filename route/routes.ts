@@ -20,6 +20,9 @@ export class Routes {
       this.authenticateController.checkAuthenticated
     );
     this.routes.get(this.messageController.MESSAGE_ROUTE, this.messageController.readMessage);
+    this.routes.get("/test", (req, res) => {
+      res.json({ message: "working" });
+    });
     return this.routes;
   }
 
