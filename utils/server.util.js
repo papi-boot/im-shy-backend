@@ -63,11 +63,11 @@ export class ServerUtil {
     this.app.use(cookieParser());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(morgan("dev"));
-    this.app.set("trust proxy", 1);
     const sessionMiddleWare = session(sessionConfig);
     this.io.use((socket, next) => {
       sessionMiddleWare(socket.request, {}, next);
     });
+    this.app.set("trust proxy", 1);
     this.app.use(sessionMiddleWare);
     sequelize.sync();
     this.app.use(passport.initialize());
