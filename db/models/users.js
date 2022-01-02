@@ -38,4 +38,3 @@ User.init(
     underscored: true,
   }
 );
-return User;
