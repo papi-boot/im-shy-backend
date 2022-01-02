@@ -52,7 +52,25 @@ const sessionConfig = {
 export class ServerUtil {
   app = express();
   httpServer = createServer(this.app);
-  io = new Server(this.httpServer, { cors: corsOptions });
+  io = new Server(this.httpServer, {
+    cors: {
+      credentials: true,
+      origin: process.env.NODE_ENV === "production" ? "https://www.im-shy.me" : "http://localhost:2209",
+      allowedHeaders: [
+        "Access-Control-Allow-Credentials",
+        "Access-Control-Allow-Headers",
+        "Access-Control-Request-Headers",
+        "Access-Control-Allow-Origin",
+        "Content-Type",
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept",
+        "Set-Cookie",
+        "Cookie",
+      ],
+    },
+  });
   SECRET_KEY = process.env.SECRET_KEY;
   socketController = new SocketConctroller();
 
