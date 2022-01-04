@@ -1,6 +1,5 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { SocketListener } from "./socket.listener";
 import { corsOptions } from "../config/cors.option";
 import { Sequelize } from "sequelize";
 import { SocketConctroller } from "../controller/socket/socket.controller";
@@ -52,9 +51,28 @@ const sessionConfig = {
 export class ServerUtil {
   app = express();
   httpServer = createServer(this.app);
-  io = new Server(this.httpServer, { cors: corsOptions });
+  io = new Server(this.httpServer, {
+    cors: {
+      origin:
+        process.env.NODE_ENV === "production" ? "https://www.im-shy.me" : "http://localhost:2209",
+      methods: ["GET", "POST", "DELETE", "PUT", "OPTION"],
+      allowedHeaders: [
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Access-Control-Allow-Headers",
+        "Access-Control-Request-Headers",
+        "Content-Type",
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept",
+        "Set-Cookie",
+        "Cookie",
+      ],
+      credentials: true,
+    },
+  });
   SECRET_KEY = process.env.SECRET_KEY;
-  sl = new SocketListener();
   socketController = new SocketConctroller();
 
   startServerMiddleWare() {
@@ -63,11 +81,11 @@ export class ServerUtil {
     this.app.use(cookieParser());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(morgan("dev"));
-    this.app.set("trust proxy", 1);
     const sessionMiddleWare = session(sessionConfig);
     this.io.use((socket, next) => {
       sessionMiddleWare(socket.request, {}, next);
     });
+    this.app.set("trust proxy", 1);
     this.app.use(sessionMiddleWare);
     sequelize.sync();
     this.app.use(passport.initialize());

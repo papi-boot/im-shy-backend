@@ -2,7 +2,7 @@
   "name": "imshy-backend",
   "version": "1.0.0",
   "description": "im shy backend service",
-  "main": "dist/main.js",
+  "main": "main.js",
   "scripts": {
     "start": "node dist/main.js",
     "build": "tsc",
@@ -24,12 +24,15 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dompurify": "^2.3.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "jsdom": "^18.1.1",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.7.1",
     "sequelize": "^6.7.0",
     "socket.io": "^4.4.0"
   },
@@ -43,9 +46,6 @@
     "@types/morgan": "^1.9.3",
     "@types/passport": "^1.0.7",
     "@types/passport-local": "^1.0.34",
-    "dotenv": "^10.0.0",
-    "morgan": "^1.10.0",
-    "pg": "^8.7.1",
     "sequelize-cli": "^6.3.0",
     "typescript": "^4.5.2"
   }
