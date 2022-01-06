@@ -3,6 +3,7 @@ import { LoginController } from "../controller/login/login.controller";
 import { CookieController } from "../controller/cookie/cookie.controller";
 import { AuthenticateController } from "../controller/authenticate/authenticate.controller";
 import { MessageController } from "../controller/with-credentials/message/message.controller";
+import { ChatController } from "../controller/with-credentials/chat/chat.controller";
 import express from "express";
 import passport from "passport";
 new LoginController().loginPassportConfig(passport);
@@ -13,6 +14,7 @@ export class Routes {
   private cookieController: CookieController = new CookieController();
   private authenticateController: AuthenticateController = new AuthenticateController();
   private messageController: MessageController = new MessageController();
+  private chatController: ChatController = new ChatController();
   // @TODO: ALL HTTP GET ROUTE
   public GET_REQUEST(): any {
     this.routes.get(
@@ -20,9 +22,7 @@ export class Routes {
       this.authenticateController.checkAuthenticated
     );
     this.routes.get(this.messageController.MESSAGE_ROUTE, this.messageController.readMessage);
-    this.routes.get("/test", (req, res) => {
-      res.json({ message: "working" });
-    });
+    this.routes.get(this.authenticateController.LOGOUT_ROUTE, this.authenticateController.logOut);
     return this.routes;
   }
 

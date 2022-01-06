@@ -5,6 +5,7 @@ import { User } from "../../db/models/users";
 import { SuccessHandler } from "../../middleware/success.handler";
 export class AuthenticateController {
   public AUTH_ROUTE: string = "/authenticate";
+  public LOGOUT_ROUTE: string = "/sign-out";
   private errorHandler: ErrorHandler = new ErrorHandler();
   private successHandler: SuccessHandler = new SuccessHandler();
   public checkAuthenticated = async (req: express.Request, res: express.Response) => {
@@ -28,7 +29,35 @@ export class AuthenticateController {
         });
       }
     } catch (err) {
-      this.errorHandler.error400(err, res);
+      return this.errorHandler.error400(err, res);
+    }
+  };
+
+  public logOut = (req: express.Request, res: express.Response) => {
+    try {
+      if (req.isAuthenticated()) {
+        req.logOut();
+        req.session.destroy((err) => {
+          if (err) {
+            console.error(err);
+            throw err;
+          }
+          res.clearCookie("connect.sid");
+          return this.successHandler.successResponse(200, res, {
+            message: "Logout Successfully",
+            url: "/",
+            success: true,
+          });
+        });
+      } else {
+        return this.errorHandler.errorGlobalResponse(401, res, {
+          message: "You are not authenticated. Please reload the page",
+          success: false,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      return this.errorHandler.error400(err, res);
     }
   };
 }
