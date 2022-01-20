@@ -10,6 +10,7 @@ export class SocketConctroller {
         console.log(value, session.passport);
       });
       this.socketSendMessage(socket, io);
+      this.socketAcceptUserChatList(socket, io);
       // @Disconnect socket;
       socket.on("disconnect", () => {
         console.log(`A User disconnect ${socket.id}`);
@@ -23,6 +24,14 @@ export class SocketConctroller {
     socket.on("send message", (value: any) => {
       console.log(`Reciever ID: ${value.reciever}`);
       io.emit("send message", { reciever: value.reciever });
+    });
+  };
+
+  // Socket Listener when someone accept user on chat
+  private socketAcceptUserChatList = (socket: Socket, io: Socket): void => {
+    socket.on("accept chat", (value: any) => {
+      console.log(`Accepted User: ${value.reciever}`);
+      io.emit("accept chat", { reciever: value.reciever });
     });
   };
 }

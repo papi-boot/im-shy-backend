@@ -23,6 +23,8 @@ export class Routes {
     );
     this.routes.get(this.messageController.MESSAGE_ROUTE, this.messageController.readMessage);
     this.routes.get(this.authenticateController.LOGOUT_ROUTE, this.authenticateController.logOut);
+    this.routes.get(this.chatController.ADD_CHAT_LIST_ROUTE, this.chatController.addChatList);
+    this.routes.get(this.chatController.CHAT_LIST_ROUTE, this.chatController.readChatList);
     return this.routes;
   }
 
@@ -31,6 +33,7 @@ export class Routes {
     this.routes.post(this.registerController.REGISTER_ROUTE, this.registerController.createUser);
     this.routes.post(this.loginController.LOGIN_ROUTE, this.loginController.loginUser);
     this.routes.post(this.messageController.MESSAGE_ROUTE, this.messageController.createMessage);
+    this.routes.post(this.chatController.CHAT_LIST_ROUTE, this.chatController.createChatList);
     return this.routes;
   }
 
