@@ -11,6 +11,8 @@ export class SocketConctroller {
       });
       this.socketSendMessage(socket, io);
       this.socketAcceptUserChatList(socket, io);
+      this.socketSendChatMessage(socket, io);
+      this.socketTypingChat(socket, io);
       // @Disconnect socket;
       socket.on("disconnect", () => {
         console.log(`A User disconnect ${socket.id}`);
@@ -32,6 +34,20 @@ export class SocketConctroller {
     socket.on("accept chat", (value: any) => {
       console.log(`Accepted User: ${value.reciever}`);
       io.emit("accept chat", { reciever: value.reciever });
+    });
+  };
+
+  // Socket Listener when sending message on chat
+  private socketSendChatMessage = (socket: Socket, io: Socket): void => {
+    socket.on("send chat-message", (value: any) => {
+      console.log(value);
+      io.emit("send chat-message", value);
+    });
+  };
+
+  private socketTypingChat = (socket: Socket, io: Socket): void => {
+    socket.on("typing chat", (value: any) => {
+      socket.broadcast.emit("typing chat", value);
     });
   };
 }
